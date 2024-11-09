@@ -9,8 +9,8 @@ export default async function Home({
   searchParams: Promise<{ queryText?: string }>;
 }) {
   const query = (await searchParams).queryText;
-  //const posts = await client.fetch(STAERTUPS_QUERY);
-  const { data: posts } = await sanityFetch({ query: STAERTUPS_QUERY });
+  const params = { search: query || null };
+  const { data: posts } = await sanityFetch({ query: STAERTUPS_QUERY, params });
 
   return (
     <>
