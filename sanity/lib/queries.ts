@@ -26,3 +26,9 @@ export const STAERTUPS_BY_ID_QUERY =
     image,
     pitch
 }`);
+
+export const STAERTUPS_VIEW_QUERY =
+  defineQuery(`*[_type=="startup" && _id== $id][0] {
+    _id, 
+    views,
+}`);
