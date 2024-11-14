@@ -2,13 +2,22 @@ import React from "react";
 import Ping from "./Ping";
 import { client } from "@/sanity/lib/client";
 import { STAERTUPS_VIEW_QUERY } from "@/sanity/lib/queries";
+import { writeClient } from "@/sanity/lib/write-client";
+import { unstable_after as after } from "next/server";
 
 const View = async ({ id }: { id: string }) => {
   const { views: totalViews } = await client
     .withConfig({ useCdn: false })
     .fetch(STAERTUPS_VIEW_QUERY, { id });
 
-    // Todo: Update the number of views when someone views the page
+  //Update the number of views when someone views the page, this ppr will load after the page loaded
+  after(
+    async () =>
+      await writeClient
+        .patch(id)
+        .set({ views: totalViews + 1 })
+        .commit()
+  );
 
   return (
     <div className="view-container">
