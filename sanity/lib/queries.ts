@@ -13,8 +13,21 @@ export const STAERTUPS_QUERY =
     image
 }`);
 
+export const STAERTUPS_BY_AUTHOR_QUERY =
+  defineQuery(`*[_type=="startup" && author._ref==$id] | order(_createdAt desc) {
+    _id, 
+    title,
+    slug,
+    _createAt,
+    author ->{_id, name, image, bio},
+    views,
+    description,
+    category,
+    image
+}`);
+
 export const STAERTUPS_BY_ID_QUERY =
-  defineQuery(`*[_type=="startup" && _id== $id][0] {
+  defineQuery(`*[_type=="startup" && _id==$id][0] {
     _id, 
     title,
     slug,
@@ -28,13 +41,24 @@ export const STAERTUPS_BY_ID_QUERY =
 }`);
 
 export const STAERTUPS_VIEW_QUERY =
-  defineQuery(`*[_type=="startup" && _id== $id][0] {
+  defineQuery(`*[_type=="startup" && _id==$id][0] {
     _id, 
     views,
 }`);
 
 export const AUTHOR_BY_GITHUB_ID_QUERY =
-  defineQuery(`*[_type=="author" && id== $id][0] {
+  defineQuery(`*[_type=="author" && id==$id][0] {
+    _id, 
+    id,
+    name,
+    username,
+    email,
+    image,
+    bio,
+}`);
+
+export const AUTHOR_BY_ID_QUERY =
+  defineQuery(`*[_type=="author" && _id==$id][0] {
     _id, 
     id,
     name,
